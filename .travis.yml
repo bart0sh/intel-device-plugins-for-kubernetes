@@ -12,6 +12,6 @@ before_install:
 script:
   - make format
   - make lint
-  #- make
-  #- make vet
+  - make
+  - make vet
   - make test
