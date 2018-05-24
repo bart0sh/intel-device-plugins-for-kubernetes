@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/bart0sh/intel-device-plugins-for-kubernetes.svg?branch=PR0004-add-travis-ci-config-debug)](https://travis-ci.org/bart0sh/intel-device-plugins-for-kubernetes)
 # Intel GPU Device Plugin for Kubernetes
 
 ## QuickStart: build and run plugin on the host
