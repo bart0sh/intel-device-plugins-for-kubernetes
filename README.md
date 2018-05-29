@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/intel/intel-device-plugins-for-kubernetes.svg?branch=master)](https://travis-ci.org/intel/intel-device-plugins-for-kubernetes)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/intel/intel-device-plugins-for-kubernetes/issues)
 
 # Intel Device Plugins for Kubernetes
 
