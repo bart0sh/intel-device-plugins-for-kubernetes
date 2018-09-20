@@ -1,25 +1,61 @@
 language: go
 
+dist: xenial
+
 go:
   - 1.10.x
+
+env:
+  global:
+    - RUNC_VERSION=v1.0.0-rc5
+    - CRIO_VERSION=v1.11.5
 
 sudo: required
 
 before_install:
+  # checkers
   - go get -v github.com/golang/lint/golint
   - go get -v github.com/fzipp/gocyclo
   # hack for building on forks
   - repo=`basename $PWD`; src=`dirname $PWD`; dest="`dirname $src`/intel"
   - if [[ "$src" != "$dest" ]]; then mv "$src" "$dest"; cd ../../intel/$repo; export TRAVIS_BUILD_DIR=`dirname $TRAVIS_BUILD_DIR`/$repo; fi
+  # build and install buildah
+  - cdir=$(pwd)
+  - sudo apt-get -y install software-properties-common
+  - sudo add-apt-repository -y ppa:alexlarsson/flatpak
+  - sudo apt-get -y update
+  - sudo apt-get -y install libdevmapper-dev libglib2.0-dev libc6-dev libgpgme11-dev libgpg-error-dev libostree-dev
+  - sudo apt-get -y install libgpg-error-dev libprotobuf-dev libprotobuf-c0-dev libseccomp-dev pkg-config btrfs-tools #python3-setuptools
+  - mkdir -p $GOPATH/src/github.com/containers
+  - cd $GOPATH/src/github.com/containers
+  # build buildah
+  - git clone https://github.com/containers/buildah
+  - cd buildah
+  - make buildah TAGS=""
+  - sudo cp buildah /usr/local/bin
+  # configure buildah
+  - sudo mkdir -p /etc/containers
+  #- echo -e '[registries.search]\nregistries = ["docker.io"]\n\n[registries.insecure]\nregistries = []\n\n[registries.block]\nregistries = []' | sudo tee /etc/containers/registries.conf
+  - echo -e '[registries.search]\nregistries = ["docker.io"]\n\n' | sudo tee /etc/containers/registries.conf
+  - sudo curl https://raw.githubusercontent.com/kubernetes-sigs/cri-o/$CRIO_VERSION/test/policy.json -o /etc/containers/policy.json
+  # install runc
+  - sudo curl -L https://github.com/opencontainers/runc/releases/download/$RUNC_VERSION/runc.amd64 -o /usr/bin/runc
+  - sudo chmod +x /usr/bin/runc
+  - cd $cdir
+
 script:
-  - make format
-  - make lint
-  - make
-  - make vet
-  - make cyclomatic-check
-  - make test
+  - sudo make images BUILDER=buildah
   - make images
-  - make demos
+  #- make format
+  #- make lint
+  #- make
+  #- make vet
+  #- make cyclomatic-check
+  #- make test
+  #- make images
+  #- sudo make images BUILDER=buildah
+  #- make demos BUILDER=buildah
+  #- sudo make demos BUILDER=buildah
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
