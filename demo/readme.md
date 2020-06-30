@@ -4,7 +4,7 @@
 
 - [Demo overview](#demo-overview)
 - [Intel® GPU Device Plugin demo video](#intel-gpu-device-plugin-demo-video)
-- [Intel® FPGA Device Plugin demo video](#intel-fpga-device-plugin-demo-video)
+- [Intel® FPGA Device Plugin demo videos](#intel-fpga-device-plugin-demo-videos)
 - [Intel® QuickAssist Technology Device Plugin OpenSSL demo video](#intel-quickassist-technology-device-plugin-openssl-demo-video)
 - [Intel® QuickAssist Technology Device Plugin with DPDK demo video](#intel-quickassist-technology-device-plugin-with-dpdk-demo-video)
 
@@ -50,23 +50,25 @@ Only one worker node has a GPU. The time difference in transcoding speed is capt
 
 [![Intel® GPU Device Plugin demo](https://img.youtube.com/vi/sg31rV1FdQk/0.jpg)](https://youtu.be/sg31rV1FdQk)
 
-## Intel® FPGA Device Plugin demo video
+## Intel® FPGA Device Plugin demo videos
 
-The screencast demonstrates the deployment of the Intel® FPGA Device Plugin for
-Kubernetes and executes a native loopback 3 (NLB3) workload. The demo begins
-with a fully [configured Kubernetes cluster](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
+The screencasts demonstrate the deployment of the Intel® FPGA Device Plugin for
+Kubernetes in preprogrammed and orchestrated modes and execute a native loopback 3 (NLB3) workload.
+The demos begin with a fully [configured Kubernetes cluster](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
 with the [Go runtime](https://golang.org/doc/install).
 
 ### Demo platform configuration
 
 - Hardware
-    - 1-node, 2x Intel@ Xeon@ Gold 6140M CPU @ 2.30GHz
-    - Total memory 377 GB
-    - Intel® Arria® 10 GX FPGA
+    - 1-node, Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz
+    - Total memory 62 GB
+    - 2 x Intel® Arria® 10 GX FPGA Programmable Acceleration Card(PAC)
 - Software
-    - Ubuntu 18.04.2 LTS (Kernel: 4.15.0-60-generic)
-    - Kubernetes* 1.13
-    - CRI-O 1.13.1
+    - openSUSE Leap 15.1 (Kernel: 5.4.5-1.g47eef04-default)
+    - Kubernetes* 1.17
+    - CRI-O 1.13.1 for orchestration programmed mode
+    - Docker 19.03.1
+    - runc 1.0.0-rc8
     - Intel® FPGA Device Plugin built from master branch
 
 ### Demo steps
@@ -74,15 +76,19 @@ with the [Go runtime](https://golang.org/doc/install).
 1. Validate the status of the [Kubernetes cluster](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/).
 2. Clone the [Intel Device Plugins for Kubernetes source](https://github.com/intel/intel-device-plugins-for-kubernetes).
 3. Provision the [admission controller webhook](https://github.com/intel/intel-device-plugins-for-kubernetes/blob/master/cmd/fpga_admissionwebhook/README.md).
-4. Provision the [Intel® FPGA Device Plugin](https://github.com/intel/intel-device-plugins-for-kubernetes/blob/master/cmd/fpga_plugin/README.md).
-5. Build the opae-nlb-demo image
+4. Create bitstream storage (for orchestrated mode only)
+5. Provision the [Intel® FPGA Device Plugin](https://github.com/intel/intel-device-plugins-for-kubernetes/blob/master/cmd/fpga_plugin/README.md).
 6. Run the NLB3 workload.
 
-### Screencast
+### Screencasts
 
-Intel® FPGA Device Plugin deployment
+- Intel® FPGA Device Plugin deployment in preprogrammed mode
 
-[![Intel® FPGA Device Plugin deployment](https://asciinema.org/a/JuYzNxx9n0eQ1vQBzy86GYBki.png)](https://asciinema.org/a/JuYzNxx9n0eQ1vQBzy86GYBki)
+[<img src="https://asciinema.org/a/78iLCNz4W344vm4oSrDuJ6g6i.svg" width="700">](https://asciinema.org/a/78iLCNz4W344vm4oSrDuJ6g6i)
+
+- Intel® FPGA Device Plugin deployment in orchestrated mode
+
+[<img src="https://asciinema.org/a/JuYzNxx9n0eQ1vQBzy86GYBki.svg" width="700">](https://asciinema.org/a/JuYzNxx9n0eQ1vQBzy86GYBki)
 
 ## Intel® QuickAssist Technology Device Plugin OpenSSL demo video
 
